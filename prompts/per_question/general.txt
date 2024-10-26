@@ -1,0 +1,4 @@
+Here is a list of my students' answers to one quiz question, please help me summarize all the arguments 
+provided by the students and the number of responses the students gave to that argument.
+
+{student_responses}

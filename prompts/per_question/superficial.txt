@@ -1,0 +1,7 @@
+Please help me analyze which students' responses are more superficial and list their responses.
+To analyze which students' responses are more superficial, we can consider factors like:
+Depth of explanation: Do they explain their reasoning clearly, or do they just repeat basic ideas from the study?
+Application to the question: Do they directly address the quiz question, or do they give a vague or overly general response?
+Originality: Are they simply restating the obvious conclusion, or do they offer any additional insight or personal reflection?
+
+{student_responses}
