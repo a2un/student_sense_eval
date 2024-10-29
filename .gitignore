@@ -2,4 +2,5 @@ student_sense_eval_env
 __pycache__
 *.pyc
 .DS_Store
-
+node_modules
+package-lock.json

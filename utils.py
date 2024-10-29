@@ -4,13 +4,18 @@ from openai import OpenAI
 class LLM_client(object):
 
     def __init__(self,prompt_type, student_response):
-        self.prompt_type = prompt_type
+        prompt_map = {
+            "Summarize Per Question": 'general.txt',
+            "Analyze Superficiality Per Question": 'superficial.txt'
+        }
+
+        self.prompt_type = prompt_map[prompt_type]
         self.student_response = student_response
 
     def make_prompt(self):
-        with open(f'../prompts/per_quesiton/{self.prompt_type}','r') as f:
+        with open(f'./prompts/per_question/{self.prompt_type}','r') as f:
             return f.read().format(**{
-                "student_response": f"{self.student_response!r}"
+                "student_responses": f"{self.student_response!r}"
             })
 
 
