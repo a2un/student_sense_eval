@@ -11,6 +11,21 @@ python3 -m pip install -r requirements.txt
 streamlit run main.py
 ```
 
+If re-running the app without installation
+
+MACOS / Linux
+```{python}
+source ./student_sense_eval_env/bin/activate
+streamlit run main.py
+```
+
+Windows
+```{python}
+source ./student_sense_eval_env/Scripts/activate.bat
+python3 -m streamlit run main.py
+```
+
+
 2. Once the app is running, it will launch a tab on your default browser automatically. 
 
 3. In the webform, fill these fields:
