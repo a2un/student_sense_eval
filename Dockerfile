@@ -1,19 +1,12 @@
 # student_sense_eval/Dockerfile
 
-FROM python:3.9-slim
+FROM python:3.9
 
-WORKDIR /student_sense_eval
+WORKDIR /code
 
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    curl \
-    software-properties-common \
-    git \
-    && rm -rf /var/lib/apt/lists/*
+COPY ./requirements.txt /code/requirements.txt
 
-RUN git clone https://github.com/a2un/student_sense_eval.git .
-
-RUN pip3 install -r requirements.txt
+RUN pip install --no-cache-dir --progress-bar off --upgrade -r /code/requirements.txt
 
 EXPOSE 8501
 
