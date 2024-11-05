@@ -30,5 +30,4 @@ if 'dataframe' in st.session_state:
 if st.button("Generate",key="",on_click=make_call_get_response):
     st.markdown(st.session_state.response_title)
     st.markdown(st.session_state.llm_response)
-
-clear_session_state()
+    clear_session_state()
