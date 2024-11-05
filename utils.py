@@ -27,6 +27,15 @@ def make_call_get_response():
         st.error(f"Something went wrong. This incident has been reported. We will fix it! This is all we know -{str(e)}")
 
 
+
+def clear_session_state():
+    for key in st.session_state.keys():
+        del st.session_state[key]
+
+def clear_secrets():
+    
+
+
 """LLM Client Class"""
 class LLM_client(object):
 
