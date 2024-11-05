@@ -10,7 +10,7 @@ def make_call_get_response():
     prompt_type = st.session_state.prompt_type
     dataframe = st.session_state.dataframe
     question_number = st.session_state.question_number
-    api_key = st.session_state.api_key
+    api_key = st.secrets.api_key
 
     try:
         llm_client = LLM_client(prompt_type,dataframe.iloc[1:,5+int(question_number)].to_list())

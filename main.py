@@ -6,7 +6,7 @@ from io import StringIO
 
 uploaded_file = st.file_uploader("upload the file to be processed",type=['.csv'])
 
-st.text_input("Provide OpenAI API Key",key="api_key", value="")
+# st.text_input("Provide OpenAI API Key",key="api_key", value="")
 
 st.selectbox("Select Prompt Options",key="prompt_type",options=["Summarize Per Question","Analyze Superficiality Per Question"])
 
