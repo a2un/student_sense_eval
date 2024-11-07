@@ -1,9 +1,21 @@
 from openai import OpenAI
 import streamlit as st
 from os import walk
-
+import pyperclip as pycpy
 
 """General Purpose functions"""
+
+def toggle_feedback_counter():
+    st.session_state['feedback_counter'] = (st.session_state['feedback_counter']+1)%2
+
+def copy_feedback():
+    try:
+        pycpy.copy(st.session_state.feedback.copy())
+
+        st.success("Feedback copy successful!")
+    except Exception as e:
+        st.error("Couldn't copy feedback")
+
 
 ### me
 def make_call_get_response():
@@ -20,7 +32,7 @@ def make_call_get_response():
         st.session_state.llm_response = llm_client.response
         # print(st.session_state.response_title)
         # print(st.session_state.llm_response)
-        print(llm_client.response_json)
+        # print(llm_client.response_json)
 
     except IndexError:
         st.error("Choose a column that has non-empty rows!")
@@ -40,7 +52,8 @@ def make_call_get_response():
 def clear_session_state():
     try:
         for key in st.session_state.keys():
-            del st.session_state[key]
+            if not(key in ['feedback_counter','feedback']):
+                del st.session_state[key]
     except:
         st.error("We didn't mean for this to happen")
 
@@ -92,7 +105,7 @@ class LLM_client(object):
 
 
     def post_process(self,llm_output):
-        print("output len",len(llm_output))
+        # print("output len",len(llm_output))
         self.response = llm_output[0].message.content #''.join([output.message.content for output in llm_output[:-1]])
 
         self.response_json = llm_output[-1].message.content
