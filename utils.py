@@ -7,12 +7,13 @@ from os import walk
 
 ### me
 def make_call_get_response():
-    prompt_type = st.session_state.prompt_type
-    dataframe = st.session_state.dataframe
-    question_number = st.session_state.question_number
-    api_key = st.secrets.api_key
-
     try:
+        prompt_type = st.session_state.prompt_type
+        dataframe = st.session_state.dataframe
+        question_number = st.session_state.question_number
+        api_key = st.secrets.api_key
+
+    
         llm_client = LLM_client(prompt_type,dataframe.iloc[1:,5+int(question_number)].to_list())
         st.session_state.response_title = f"**Question:** {dataframe.iloc[0,5+int(question_number)]}"
         llm_client.get_LLM_repsonse(api_key)
@@ -23,14 +24,25 @@ def make_call_get_response():
 
     except IndexError:
         st.error("Choose a column that has non-empty rows!")
+    except AttributeError:
+        if not("question_number" in st.session_state) or \
+            not("dataframe" in st.session_state) or \
+            not("prompt_type" in st.session_state):
+            st.error("Please upload a file!")
+        if not("response_title" in st.session_state) or \
+            not("llm_response" in st.session_state):
+            st.error("API key not provided")
     except Exception as e:
         st.error(f"Something went wrong. This incident has been reported. We will fix it! This is all we know -{str(e)}")
 
 
 
 def clear_session_state():
-    for key in st.session_state.keys():
-        del st.session_state[key]
+    try:
+        for key in st.session_state.keys():
+            del st.session_state[key]
+    except:
+        st.error("We didn't mean for this to happen")
 
 
 """LLM Client Class"""
