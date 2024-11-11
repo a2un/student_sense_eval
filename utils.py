@@ -5,16 +5,8 @@ import pyperclip as pycpy
 
 """General Purpose functions"""
 
-def toggle_feedback_counter():
-    st.session_state['feedback_counter'] = (st.session_state['feedback_counter']+1)%2
-
-def copy_feedback():
-    try:
-        pycpy.copy(st.session_state.feedback.copy())
-
-        st.success("Feedback copy successful!")
-    except Exception as e:
-        st.error("Couldn't copy feedback")
+def make_it_complete():
+    st.session_state.feedback_complete = 1
 
 
 ### me

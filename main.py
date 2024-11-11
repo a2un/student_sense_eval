@@ -29,18 +29,11 @@ if 'dataframe' in st.session_state and not(st.session_state.prompt_type == None)
 
 if st.button("Generate",key="",on_click=make_call_get_response):
     try:
-        st.button("Edit The Feedback",disabled=True,on_click=toggle_feedback_counter)
-        st.button("Copy Feedback",disabled=True,on_click=copy_feedback)
+        # st.button("Edit The Feedback",on_click=make_it_text)
+        st.session_state.feedback_complete = 0
         st.session_state['feedback'] = st.session_state.llm_response
         
-        if not(st.session_state.feedback_counter): 
-            st.markdown(st.session_state.response_title)
-            st.markdown(st.session_state['feedback'])
-
-        if st.session_state.feedback_counter: ## odd number, clicked
-            st.markdown(st.session_state.response_title)
-            st.text_area("Editing AI Generated Feedback...",
-                            value=st.session_state['feedback'])
+        st.markdown(st.session_state['feedback'])
 
         # clear_session_state()
     except Exception as e:
