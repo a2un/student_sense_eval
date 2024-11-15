@@ -3,6 +3,7 @@ from utils import *
 import pandas as pd
 from os import path
 from io import StringIO
+from streamlit.components.v1 import components
 
 uploaded_file = st.file_uploader("upload the file to be processed",type=['.csv'])
 
@@ -31,9 +32,12 @@ if st.button("Generate",key="",on_click=make_call_get_response):
     try:
         # st.button("Edit The Feedback",on_click=make_it_text)
         st.session_state.feedback_complete = 0
+        ]
         st.session_state['feedback'] = st.session_state.llm_response
-        
+        st.markdown(st.session_state['response_title'])
         st.markdown(st.session_state['feedback'])
+        my_component = components.declare_component("my_component",path="frontend/build")
+        
 
         # clear_session_state()
     except Exception as e:
