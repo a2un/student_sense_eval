@@ -1,6 +1,6 @@
-Here is a list of my students' answers to one quiz question, please help me summarize all the arguments 
-provided by the students and the number of responses the students gave to that argument.
-
-{student_responses}
-
-Rank the outputs by frequency of occurrence and provide a percentage for each theme in the summary.
+Now you need to go through all the student responses for this question, and please report:
+1) the original question, 
+2) identify and categorize the main arguments presented by students, list arguments from most to least frequently 
+mentioned, include the percentage of students who discussed each argument and their student id,
+3) base on the response patterns, identify potential areas of confusion or misconception, and 
+suggest the specific aspects of the  topic that might need further clarification

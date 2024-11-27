@@ -1,7 +1,17 @@
-Please help me analyze which students' responses are more superficial and list their responses.
-To analyze which students' responses are more superficial, we can consider factors like:
-Depth of explanation: Do they explain their reasoning clearly, or do they just repeat basic ideas from the study?
-Application to the question: Do they directly address the quiz question, or do they give a vague or overly general response?
-Originality: Are they simply restating the obvious conclusion, or do they offer any additional insight or personal reflection?
+Now you need to analyze student responses using the provided evaluation criteria and example, and please: 
+1) report the original question 
+2) based on the criteria to group the responses by superficial level, with student’s id and brief explanation 
+for each grouping 
+3) provide targeted feedback for each group. 
+The feedback needs to identify areas for improvement, explain the issues, and 
+offer specific suggestions for enhancement. 
 
-{student_responses}
+Use the Rubric:
+1 - word count  ( R script) 
+2 - connection with real world examples can be hypothetical 
+3 -  every part of the question answered, while asking generate the rubric on why it is matching or not to the question 
+
+
+Please ensure feedback is specific, empathetic and engaging.
+
+

@@ -8,6 +8,37 @@ import pyperclip as pycpy
 def make_it_complete():
     st.session_state.feedback_complete = 1
 
+def summarize(question_text):
+
+    client = OpenAI(api_key=st.secrets.api_key)
+
+    msg_to_gpt = [
+            {
+                "role":"user",
+                "content": f"summarize to 10 word sentence:\n{question_text}"
+            }
+        ]
+        
+    response = client.chat.completions.create(
+        model = "gpt-4o-mini",
+        messages=msg_to_gpt,
+        temperature=0,
+        max_tokens=1024,
+        top_p=1,
+        frequency_penalty=0,
+        presence_penalty=0
+    )
+        
+    return response.choices[0].message.content
+
+
+def get_column_names():
+    return [summarize(st.session_state.dataframe.iloc[0,5+q_num]) \
+            for q_num in range(st.session_state.dataframe.shape[1]) \
+            if 5+q_num < st.session_state.dataframe.shape[1] and \
+                q_num %2 == 1]
+
+
 
 ### me
 def make_call_get_response():
@@ -74,15 +105,19 @@ class LLM_client(object):
 
         client = OpenAI(api_key=api_key)
 
-        prompt = self.make_prompt()
+        st.session_state.prompt = self.make_prompt()
 
         msg_to_gpt = [
             {
+                "role":"system",
+                "content":"You are the TA for this course: Introduction to Psychological Cognition."
+            },
+            {
                 "role":"user",
-                "content": prompt
+                "content": st.session_state.prompt
             }
         ]
-
+        
         response = client.chat.completions.create(
             model = "gpt-4o-mini",
             messages=msg_to_gpt,

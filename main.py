@@ -24,8 +24,8 @@ if uploaded_file is not None:
     st.session_state.dataframe = pd.read_csv(uploaded_file,header=None)
     st.selectbox("Select Prompt Options",key="prompt_type",index=None,options=["Summarize Per Question","Analyze Superficiality Per Question"])
 
-if 'dataframe' in st.session_state and not(st.session_state.prompt_type == None):
-    st.selectbox("Provide the Question number to summarize",key="question_number",options=[2*k+1 for k in range(0,st.session_state.dataframe.shape[0])])
+if 'dataframe' in st.session_state and not(st.session_state.prompt_type == None) and uploaded_file is not None:
+    st.selectbox("Provide the Question number to summarize",key="question_number",options=get_column_names())
 # question_number = st.number_input("Provide the Question number to summarize on (every odd number)",value=None)
 
 if st.button("Generate",key="",on_click=make_call_get_response):
@@ -34,9 +34,9 @@ if st.button("Generate",key="",on_click=make_call_get_response):
         st.session_state.feedback_complete = 0
         
         st.session_state['feedback'] = st.session_state.llm_response
+        st.text_area("edit prompt",value=st.session_state['prompt'])
         st.markdown(st.session_state['response_title'])
         st.markdown(st.session_state['feedback'])
-        my_component = components.declare_component("my_component",path="frontend/build")
         
 
         # clear_session_state()
