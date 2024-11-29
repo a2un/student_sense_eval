@@ -5,7 +5,7 @@ from os import path
 from io import StringIO
 from streamlit.components.v1 import components
 
-uploaded_file = st.file_uploader("upload the file to be processed",type=['.csv'])
+uploaded_file = st.file_uploader("Submit Student Responses from Canvas in .csv ",type=['.csv'])
 
 st.session_state['feedback_counter'] = 0
 st.session_state['feedback'] = ''
@@ -22,11 +22,16 @@ if uploaded_file is not None:
     string_data = stringio.read()
     # Can be used wherever a "file-like" object is accepted:
     st.session_state.dataframe = pd.read_csv(uploaded_file,header=None)
-    st.selectbox("Select Prompt Options",key="prompt_type",index=None,options=["Summarize Per Question","Analyze Superficiality Per Question"])
+    st.selectbox("Which Question Would you like to Analyze?",key="question_number",options=get_column_names())
 
-if 'dataframe' in st.session_state and not(st.session_state.prompt_type == None) and uploaded_file is not None:
-    st.selectbox("Provide the Question number to summarize",key="question_number",options=get_column_names())
+if 'dataframe' in st.session_state and not(st.session_state.question_number == None) and uploaded_file is not None:
+    st.selectbox("What do we ask ChatGPT?",key="prompt_type",index=None,options=["1: General Student Resonse Trends","2: Specific Issues w Student Response(s)"])
 # question_number = st.number_input("Provide the Question number to summarize on (every odd number)",value=None)
+
+if 'dataframe' in st.session_state and not(st.session_state.question_number == None) and \
+    uploaded_file is not None and not(st.session_state.prompt_type == None):
+    st.selectbox("Which Student to Analyze?",key="student_names",options=get_student_names())
+
 
 if st.button("Generate",key="",on_click=make_call_get_response):
     try:
@@ -34,7 +39,7 @@ if st.button("Generate",key="",on_click=make_call_get_response):
         st.session_state.feedback_complete = 0
         
         st.session_state['feedback'] = st.session_state.llm_response
-        st.text_area("edit prompt",value=st.session_state['prompt'])
+        st.text_area("LLM Rubric",value=st.session_state['prompt'])
         st.markdown(st.session_state['response_title'])
         st.markdown(st.session_state['feedback'])
         
@@ -42,4 +47,7 @@ if st.button("Generate",key="",on_click=make_call_get_response):
         # clear_session_state()
     except Exception as e:
         st.error(f"Nothing to generate-{str(e)}")
+
+
+
 

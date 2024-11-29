@@ -33,23 +33,35 @@ def summarize(question_text):
 
 
 def get_column_names():
-    return [summarize(st.session_state.dataframe.iloc[0,5+q_num]) \
+    return [f"{5+q_num}: {summarize(st.session_state.dataframe.iloc[0,5+q_num])}" \
             for q_num in range(st.session_state.dataframe.shape[1]) \
             if 5+q_num < st.session_state.dataframe.shape[1] and \
                 q_num %2 == 1]
 
 
+def get_student_names():
+    student_names = ["All Students"]
+    student_names.extend([i for i in range(1,len(st.session_state.dataframe))])
+    return student_names
 
 ### me
+def get_student_list(dataframe,question_number,student_id):
+    if student_id == "All Students":
+        return dataframe.iloc[1:,5+int(question_number)].to_list()
+    else:
+        return dataframe.iloc[int(student_id),5+int(question_number)].to_list()
+    
+
 def make_call_get_response():
     try:
-        prompt_type = st.session_state.prompt_type
+        prompt_type = st.session_state.prompt_type.split(":")[0]
         dataframe = st.session_state.dataframe
-        question_number = st.session_state.question_number
+        question_number = st.session_state.question_number.split(":")[0]
+        student_id = st.session_state.student_names
         api_key = st.secrets.api_key
 
     
-        llm_client = LLM_client(prompt_type,dataframe.iloc[1:,5+int(question_number)].to_list())
+        llm_client = LLM_client(prompt_type,get_student_list(dataframe, question_number,student_id))
         st.session_state.response_title = f"**Question:** {dataframe.iloc[0,5+int(question_number)]}"
         llm_client.get_LLM_repsonse(api_key)
         st.session_state.llm_response = llm_client.response
@@ -86,8 +98,8 @@ class LLM_client(object):
 
     def __init__(self,prompt_type, student_response):
         prompt_map = {
-            "Summarize Per Question": 'general.txt',
-            "Analyze Superficiality Per Question": 'superficial.txt'
+            "1": 'general.txt',
+            "2": 'superficial.txt'
         }
 
         self.prompt_type = prompt_map[prompt_type]
