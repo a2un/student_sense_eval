@@ -1,6 +1,6 @@
 Now you need to analyze student responses using the provided evaluation criteria and example, and please: 
 1) report the original question 
-2) based on the criteria to group the responses by superficial level, with student’s id and brief explanation 
+2) based on the criteria to group the responses by superficial level, with student’s id (row number) and brief explanation 
 for each grouping 
 3) provide targeted feedback for each group. 
 The feedback needs to identify areas for improvement, explain the issues, and 
@@ -14,4 +14,7 @@ Use the Rubric:
 
 Please ensure feedback is specific, empathetic and engaging.
 
+{question_text}
+
+{student_responses}
 

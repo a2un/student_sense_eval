@@ -1,0 +1,14 @@
+Use the Rubric to analyze and provide feedback to particular student response
+1 - word count  ( R script) 
+2 - connection with real world examples can be hypothetical 
+3 -  every part of the question answered, while asking generate the rubric on why it is matching or not to the question 
+
+
+Please ensure feedback is specific, empathetic and engaging.
+
+{question_text}
+
+{student_id}
+
+{student_response}
+

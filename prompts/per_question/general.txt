@@ -1,6 +1,11 @@
 Now you need to go through all the student responses for this question, and please report:
 1) the original question, 
 2) identify and categorize the main arguments presented by students, list arguments from most to least frequently 
-mentioned, include the percentage of students who discussed each argument and their student id,
+mentioned, include the percentage of students who discussed each argument and their student id (row number),
 3) base on the response patterns, identify potential areas of confusion or misconception, and 
 suggest the specific aspects of the  topic that might need further clarification
+
+{question_text}
+
+{student_responses}
+

@@ -25,12 +25,18 @@ if uploaded_file is not None:
     st.selectbox("Which Question Would you like to Analyze?",key="question_number",options=get_column_names())
 
 if 'dataframe' in st.session_state and not(st.session_state.question_number == None) and uploaded_file is not None:
-    st.selectbox("What do we ask ChatGPT?",key="prompt_type",index=None,options=["1: General Student Resonse Trends","2: Specific Issues w Student Response(s)"])
+    st.selectbox("What do we ask ChatGPT?",key="prompt_type",options=["1: General Student Resonse Trends","2: Specific Issues w Student Response(s)","3: Specific Issues w Specific Student Response"])
 # question_number = st.number_input("Provide the Question number to summarize on (every odd number)",value=None)
 
 if 'dataframe' in st.session_state and not(st.session_state.question_number == None) and \
-    uploaded_file is not None and not(st.session_state.prompt_type == None):
-    st.selectbox("Which Student to Analyze?",key="student_names",options=get_student_names())
+    uploaded_file is not None: 
+    
+    if not(st.session_state.prompt_type == "3: Specific Issues w Specific Student Response"):
+        st.selectbox("Which Student to Analyze?",key="all_students",options="All Students")
+    
+    if st.session_state.prompt_type == "3: Specific Issues w Specific Student Response":
+        st.selectbox("Which Student to Analyze?",key="student_names",options=get_student_names())
+
 
 
 if st.button("Generate",key="",on_click=make_call_get_response):

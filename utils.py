@@ -40,29 +40,29 @@ def get_column_names():
 
 
 def get_student_names():
-    student_names = ["All Students"]
+    student_names = []
     student_names.extend([i for i in range(1,len(st.session_state.dataframe))])
     return student_names
 
 ### me
 def get_student_list(dataframe,question_number,student_id):
     if student_id == "All Students":
-        return dataframe.iloc[1:,5+int(question_number)].to_list()
+        return dataframe.iloc[1:,int(question_number)].to_list()
     else:
-        return dataframe.iloc[int(student_id),5+int(question_number)].to_list()
+        return dataframe.iloc[int(student_id),int(question_number)]
     
 
 def make_call_get_response():
     try:
         prompt_type = st.session_state.prompt_type.split(":")[0]
         dataframe = st.session_state.dataframe
-        question_number = st.session_state.question_number.split(":")[0]
-        student_id = st.session_state.student_names
+        question_number = int(st.session_state.question_number.split(":")[0])
+        student_id = st.session_state.student_names if prompt_type == 3 else st.session_state.all_students
         api_key = st.secrets.api_key
 
     
-        llm_client = LLM_client(prompt_type,get_student_list(dataframe, question_number,student_id))
-        st.session_state.response_title = f"**Question:** {dataframe.iloc[0,5+int(question_number)]}"
+        llm_client = LLM_client(prompt_type, student_id, dataframe.iloc[0,question_number], get_student_list(dataframe, question_number,student_id))
+        st.session_state.response_title = f"**Question:** {dataframe.iloc[0,question_number]}"
         llm_client.get_LLM_repsonse(api_key)
         st.session_state.llm_response = llm_client.response
         # print(st.session_state.response_title)
@@ -96,29 +96,39 @@ def clear_session_state():
 """LLM Client Class"""
 class LLM_client(object):
 
-    def __init__(self,prompt_type, student_response):
+    def __init__(self,prompt_type, student_id, question_text, student_response):
         prompt_map = {
             "1": 'general.txt',
             "2": 'superficial.txt'
         }
-
+        self.student_id = student_id
         self.prompt_type = prompt_map[prompt_type]
         self.student_response = student_response
         self.response = ""
         self.response_json = {}
+        self.question_text = question_text
 
     def make_prompt(self):
-        with open(f'./prompts/per_question/{self.prompt_type}','r') as f:
-            return f.read().format(**{
-                "student_responses": f"{self.student_response!r}"
-            })
+        if self.student_id == "All Students":
+            with open(f'./prompts/per_question/{self.prompt_type}','r') as f:
+                return f.read().format(**{
+                    "question_text": f"{self.question_text!r}",
+                    "student_responses": f"{self.student_response!r}"
+                })
+        else:
+            with open(f'./prompts/per_question/student.txt','r') as f:
+                return f.read().format(**{
+                    "student_id": f"{self.student_id!r}",
+                    "question_text": f"{self.question_text!r}",
+                    "student_responses": f"{self.student_response!r}"
+                })
 
     def get_LLM_repsonse(self,api_key):
 
         client = OpenAI(api_key=api_key)
 
         st.session_state.prompt = self.make_prompt()
-
+        print(self.student_id)
         msg_to_gpt = [
             {
                 "role":"system",
