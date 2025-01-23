@@ -14,8 +14,12 @@ def summarize(question_text):
 
     msg_to_gpt = [
             {
+                "role":"system",
+                "content":"You're an Instructor for an introductory Cognitive Science Course"
+            },
+            {
                 "role":"user",
-                "content": f"summarize to 10 word sentence:\n{question_text}"
+                "content": f"Paraphrase the following quesiton:\n{question_text}"
             }
         ]
         
