@@ -1,0 +1,14 @@
+### Task  
+Given the following student prompt:  
+{student_prompt}
+
+Match the portion of the student responses that matches the given prompt:  
+{student_response}  
+
+Do not modify the text. Only extract the relevant portion and return the result in JSON format.  
+Don't use ```json 
+{{
+    "student_1":[],
+    "student_2:[],
+    ...
+}}

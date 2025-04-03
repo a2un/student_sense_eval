@@ -7,6 +7,7 @@ Download this repository as a .zip and unzip.
 ```{python}
 cd /path/to/student_sense_eval
 python3 -m venv ./student_sense_eval_env
+source ./student_sense_eval_env/bin/activate
 python3 -m pip install -r requirements.txt
 streamlit run main.py
 ```

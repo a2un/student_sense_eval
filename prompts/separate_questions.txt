@@ -1,0 +1,22 @@
+Separate the following into two categories:  
+1. "instructions_or_guidance" - Extract any instructional or guiding text.  
+This might involve introductory text on the topic, directions to watch a video, listen to a podcast, or read a textbook section. 
+It might also include guidance on how to answer a prompt. Do not rephrase the instructions and guidance.
+
+2. "student_prompts" - List all direct prompts without rephrasing them. 
+This might involve explicit questions, or it might involve directives to give a response. 
+If there are multiple questions or directives (e.g., asking for an explanation of a prior response or example applications), separately list out each component requiring a separate student response without rephrasing.
+
+If you see a non--open question, then label the question as "multiple choice reflection question" when appropriate.
+create other similar labels for similar non-open questions as necessary.
+
+
+{question_list}
+
+
+Print the categorized lists in a single JSON object. 
+
+{{
+    "instructions_or_guidance":,
+    "student_prompts":,
+}}

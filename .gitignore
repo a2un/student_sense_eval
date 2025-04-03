@@ -4,3 +4,4 @@ package-lock.json
 __pycache__
 .streamlit
 .DS_Store
+data
