@@ -38,12 +38,16 @@ if st.session_state.questions_file != None and \
             st.write(guidance_and_prompts)
 
             st.selectbox("##Select student prompt to match with",key="studentPrompt",
-                        options = guidance_and_prompts["student_prompts"])
+                        options = guidance_and_prompts["student_prompts"],index=None)
 
             # for student_prompt in guidance_and_prompts['student_prompts']:
             st.markdown("### Selected Student Prompt")
             st.write(st.session_state.studentPrompt)
-            student_matched_response = match_student_responses(f"{guidance_and_prompts['instructions_or_guidance']}{st.session_state.studentPrompt}",student_response)
+            st.write("### Match Student Responses")
+            st.selectbox("Select studetn response",key="selectedStudentResponse",
+                        options = student_response,index=None)
+
+            student_matched_response = match_student_responses(f"{guidance_and_prompts['instructions_or_guidance']}{st.session_state.studentPrompt}",st.session_state.selectedStudentResponse)
             st.markdown("### Matched Student Responses")
             st.write(student_matched_response)
 
