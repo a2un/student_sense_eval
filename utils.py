@@ -11,7 +11,12 @@ import re
 path_prefix = st.secrets.path_responses
 
 def load_data():
-  return pd.read_csv(st.secrets.qlist_file)
+  
+  if st.session_state.questions_file is not None and \
+    st.session_state.student_response_file is not None:
+    st.session_state['questions_df'] = pd.read_csv(st.session_state.questions_file)
+    st.session_state['student_response_df'] = pd.read_csv(st.session_state.student_response_file)
+    
 
 def clear_session_state():
     try:
@@ -33,9 +38,8 @@ def make_prompt(dir:str,prompt_type:str, question_or_prompt:str,student_response
 
 
 def get_student_response(filename:list, question:list):
-  student_response = pd.read_csv(join(path_prefix,filename.split('/')[-1]))
   
-  student_response = student_response.loc[:,question].to_list()
+  student_response = st.session_state.student_response_df.loc[:,question].to_list()
 
   return student_response
 
