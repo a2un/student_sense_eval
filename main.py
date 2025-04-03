@@ -47,7 +47,7 @@ if st.session_state.questions_file != None and \
             st.selectbox("Select studetn response",key="selectedStudentResponse",
                         options = student_response,index=None)
 
-            student_matched_response = match_student_responses(f"{guidance_and_prompts['instructions_or_guidance']}{st.session_state.studentPrompt}",st.session_state.selectedStudentResponse)
+            student_matched_response = match_student_responses(f"{guidance_and_prompts['instructions_or_guidance']}{st.session_state.studentPrompt}",[st.session_state.selectedStudentResponse])
             st.markdown("### Matched Student Responses")
             st.write(student_matched_response)
 
